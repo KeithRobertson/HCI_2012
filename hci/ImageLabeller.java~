@@ -112,7 +112,20 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 		loadButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				loadImage();
+				File file = null;
+				int returnVal = fc.showOpenDialog(fc);
+				if(returnVal == JFileChooser.APPROVE_OPTION){
+					file = fc.getSelectedFile();
+					String filepath = file.getAbsolutePath();
+					ImageLabeller window = new ImageLabeller();
+					try {
+						window.setupGUI(filepath);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					//imagePanel.setImage(file.getPath());
+				}
 			}
 		});
 		
@@ -123,7 +136,12 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 			loadButton.addKeyListener(new KeyAdapter() {
 				public void keyPressed(KeyEvent ke) {
 					if (ke.getKeyCode()==KeyEvent.VK_O && ke.isControlDown()) {
-						loadImage();
+						File file = null;
+						int returnVal = fc.showOpenDialog(fc);
+						if(returnVal == JFileChooser.APPROVE_OPTION){
+							file = fc.getSelectedFile();
+							//imagePanel.setImage(file.getPath());
+						}
 					}
 				}
 			});
@@ -159,6 +177,9 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 		scroll.setAlignmentX(Component.CENTER_ALIGNMENT);
         toolboxPanel.add(scroll);
         
+        JButton button1 = Menu.getNewButton();
+        toolboxPanel.add(button1);
+		
 		//add toolbox to window
 		appPanel.add(toolboxPanel);
 		
@@ -166,22 +187,6 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 		this.pack();
         this.setVisible(true);
 		}
-	
-	public void loadImage(){
-		File file = null;
-		int returnVal = fc.showOpenDialog(fc);
-		if(returnVal == JFileChooser.APPROVE_OPTION){
-			file = fc.getSelectedFile();
-			String filepath = file.getAbsolutePath();
-			ImageLabeller window = new ImageLabeller();
-			try {
-				window.setupGUI(filepath);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
-	}
 			
 			
 	@Override
