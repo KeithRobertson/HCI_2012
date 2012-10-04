@@ -130,7 +130,17 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 					}
 				}
 			});
-		
+
+		JButton quitButton = new JButton("Quit");
+		quitButton.setSize(50,20);
+		quitButton.setEnabled(true);
+		quitButton.addActionListener(new ActionListener(){
+			@Override		
+			public void actionPerformed(ActionEvent e) {
+				quit();
+			}
+		});
+	
 		
 		//Create JList of polygons
 		ArrayList<ArrayList<Point>> polygonsList = ImagePanel.getPolygonsList();
@@ -156,6 +166,7 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 		toolboxPanel.add(loadButton);
 		toolboxPanel.add(polygonList);		
 		toolboxPanel.add(newPolyButton);
+		toolboxPanel.add(quitButton);
 
 		
         JScrollPane scroll = new JScrollPane(polygonList);
