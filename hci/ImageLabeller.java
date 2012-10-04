@@ -71,15 +71,7 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 		
 		this.addWindowListener(new WindowAdapter() {
 		  	public void windowClosing(WindowEvent event) {
-		  		Object [] options = {"Yes", "No"};
-		  		int result = JOptionPane.showOptionDialog(null, "Quit", "Confirm quit", JOptionPane.YES_NO_OPTION, 
-		  				JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
-		  		if (result == JOptionPane.YES_OPTION){
-		  			System.out.println("Bye bye!");
-		  			System.exit(0);
-		  		}else{
-		  			;
-		  		}
+		  		quit();
 		  	}
 		});
 
@@ -191,6 +183,18 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		}
+	}
+
+	public void quit(){
+		Object [] options = {"Yes", "No"};
+		int result = JOptionPane.showOptionDialog(null, "Quit", "Confirm quit", JOptionPane.YES_NO_OPTION, 
+				JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+		if (result == JOptionPane.YES_OPTION){
+			System.out.println("Bye bye!");
+			System.exit(0);
+		}else{
+			;
 		}
 	}
 			
