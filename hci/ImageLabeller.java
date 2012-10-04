@@ -68,12 +68,18 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 	 * @throws Exception
 	 */
 	public void setupGUI(String imageFilename) throws Exception {
+		
 		this.addWindowListener(new WindowAdapter() {
 		  	public void windowClosing(WindowEvent event) {
-		  		//here we exit the program (maybe we should ask if the user really wants to do it?)
-		  		//maybe we also want to store the polygons somewhere? and read them next time
-		  		System.out.println("Bye bye!");
-		    	System.exit(0);
+		  		Object [] options = {"Yes", "No"};
+		  		int result = JOptionPane.showOptionDialog(null, "Quit", "Confirm quit", JOptionPane.YES_NO_OPTION, 
+		  				JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+		  		if (result == JOptionPane.YES_OPTION){
+		  			System.out.println("Bye bye!");
+		  			System.exit(0);
+		  		}else{
+		  			;
+		  		}
 		  	}
 		});
 
@@ -102,6 +108,11 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 		newPolyButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String name = JOptionPane.showInputDialog(null, "Enter the name of the polygon: ",
+						"HCI_2012", 1);
+				if (name != null){
+					//create polygon with name
+				}
 			}
 		});
 		newPolyButton.setToolTipText("Click to add new object");
