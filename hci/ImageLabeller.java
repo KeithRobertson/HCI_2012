@@ -2,22 +2,17 @@ package hci;
 
 import hci.ImagePanel;
 import hci.utils.Point;
+import hci.Menu;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import java.awt.Component;
-import java.awt.FileDialog;
 import java.awt.Graphics;
-import java.awt.Window;
 import java.awt.event.*;
-import java.awt.Event;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 
 
 /**
@@ -30,7 +25,7 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 	 * some java stuff to get rid of warnings
 	 */
 	private static final long serialVersionUID = 1L;
-	final JFileChooser fc = new JFileChooser();
+	final static JFileChooser fc = new JFileChooser();
 	
 	/**
 	 * main window panel
@@ -45,14 +40,21 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 	/**
 	 * image panel - displays image and editing area
 	 */
-	ImagePanel imagePanel = null;
+	static ImagePanel imagePanel = null;
 	
 	/**
 	 * handles New Object button action
 	 */
+	
+	
+	//Create JList of polygons
+	ArrayList<ArrayList<Point>> polygonsList = ImagePanel.getPolygonsList();
+	
+	static DefaultListModel listModel = new DefaultListModel();
+            
 
 	
-	public void addNewPolygon() {
+	public static void addNewPolygon() {
 		imagePanel.addNewPolygon();
 	}
 	
@@ -90,69 +92,16 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
         toolboxPanel = new JPanel();
         toolboxPanel.setLayout(new BoxLayout(toolboxPanel, BoxLayout.Y_AXIS));
         
-        
-        
-        //Add button
-		JButton newPolyButton = new JButton("New object");
-		newPolyButton.setMnemonic(KeyEvent.VK_N);
-		newPolyButton.setSize(50, 20);
-		newPolyButton.setEnabled(true);
-		newPolyButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String name = JOptionPane.showInputDialog(null, "Enter the name of the polygon: ",
-						"HCI_2012", 1);
-				if (name != null){
-					//create polygon with name
-				}
-			}
-		});
-		newPolyButton.setToolTipText("Click to add new object");
-		
-		JButton loadButton = new JButton("Load Image");
-		loadButton.setSize(50,20);
-		loadButton.setEnabled(true);
-		loadButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				loadImage();
-			}
-		});
-		
-		loadButton.setToolTipText("Click here to load a new image");
-				
-			
-			
-			loadButton.addKeyListener(new KeyAdapter() {
-				public void keyPressed(KeyEvent ke) {
-					if (ke.getKeyCode()==KeyEvent.VK_O && ke.isControlDown()) {
-						loadImage();
-					}
-				}
-			});
+		@SuppressWarnings("unused")
+		Menu menu = new Menu();
+        JButton deleteButton = Menu.getDeleteButton();
+        JButton loadButton = Menu.getLoadButton();
+        JButton newButton = Menu.getNewButton();
+        JButton quitButton = Menu.getQuitButton();
+        JButton renameButton = Menu.getRenameButton();
+        JButton saveButton = Menu.getSaveButton();
 
-		JButton quitButton = new JButton("Quit");
-		quitButton.setSize(50,20);
-		quitButton.setEnabled(true);
-		quitButton.addActionListener(new ActionListener(){
-			@Override		
-			public void actionPerformed(ActionEvent e) {
-				quit();
-			}
-		});
-	
-		
-		//Create JList of polygons
-		ArrayList<ArrayList<Point>> polygonsList = ImagePanel.getPolygonsList();
-		
-		DefaultListModel listModel = new DefaultListModel();
-        
-        for(int i = 0; i < polygonsList.size()-1; i++){
-        		System.out.println("adding saved polygon");
-        		listModel.addElement(polygonsList.get(i));
-        		System.out.println("added polygon");
-        }
-        
+
 		JList polygonList = new JList(listModel);
         polygonList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         polygonList.setSelectedIndex(0);
@@ -162,13 +111,13 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 		polygonList.setSize(100,100);
 		polygonList.setEnabled(true);
 
-
+		toolboxPanel.add(deleteButton);
 		toolboxPanel.add(loadButton);
-		toolboxPanel.add(polygonList);		
-		toolboxPanel.add(newPolyButton);
+		toolboxPanel.add(newButton);
+		toolboxPanel.add(polygonList);
+		toolboxPanel.add(renameButton);
+		toolboxPanel.add(saveButton);
 		toolboxPanel.add(quitButton);
-
-		
         JScrollPane scroll = new JScrollPane(polygonList);
 		scroll.setAlignmentX(Component.CENTER_ALIGNMENT);
         toolboxPanel.add(scroll);
@@ -181,7 +130,7 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
         this.setVisible(true);
 		}
 	
-	public void loadImage(){
+	public static void loadImage(){
 		File file = null;
 		int returnVal = fc.showOpenDialog(fc);
 		if(returnVal == JFileChooser.APPROVE_OPTION){
@@ -191,13 +140,13 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 			try {
 				window.setupGUI(filepath);
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
 	}
-
-	public void quit(){
+  
+	
+	public static void quit(){
 		Object [] options = {"Yes", "No"};
 		int result = JOptionPane.showOptionDialog(null, "Quit", "Confirm quit", JOptionPane.YES_NO_OPTION, 
 				JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
@@ -212,8 +161,10 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 			
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) {
-		System.out.println("ok");
-			}
+        for(int i = 0; i < polygonsList.size()-1; i++){
+    		listModel.addElement(polygonsList.get(i));
+        }
+	}
 	
 	/**
 	 * Runs the program

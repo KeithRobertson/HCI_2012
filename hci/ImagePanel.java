@@ -13,6 +13,8 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 import hci.utils.*;
 
@@ -41,6 +43,11 @@ public class ImagePanel extends JPanel implements MouseListener {
 	 * list of polygons
 	 */
 	static ArrayList<ArrayList<Point>> polygonsList = null;
+	
+	/**
+	 * human readable list of polygons
+	 */
+	static Dictionary<String, ArrayList<Point>> humanPolygonsList = new Hashtable<String, ArrayList<Point>>();
 	
 	/**
 	 * default constructor, sets up the window properties
@@ -94,7 +101,7 @@ public class ImagePanel extends JPanel implements MouseListener {
 	public void paint(Graphics g) {
 		super.paint(g);
 		
-		//display iamge
+		//display image
 		ShowImage();
 		
 		//display all the completed polygons
@@ -134,7 +141,7 @@ public class ImagePanel extends JPanel implements MouseListener {
 			Point firstVertex = polygon.get(0);
 			Point lastVertex = polygon.get(polygon.size() - 1);
 		
-			Graphics2D g = (Graphics2D)this.getGraphics();
+			Graphics2D g = (Graphics2D) this.getGraphics();
 			g.setColor(Color.GREEN);
 			g.drawLine(firstVertex.getX(), firstVertex.getY(), lastVertex.getX(), lastVertex.getY());
 		}
@@ -143,15 +150,19 @@ public class ImagePanel extends JPanel implements MouseListener {
 	/**
 	 * moves current polygon to the list of polygons and makes pace for a new one
 	 */
+	
+
+		
+		
 	public void addNewPolygon() {
 		//finish the current polygon if any
 		if (currentPolygon != null ) {
-			finishPolygon(currentPolygon);
+	   finishPolygon(currentPolygon);
 			polygonsList.add(currentPolygon);
-
+			ImageLabeller.listModel.addElement(currentPolygon);
 		}
-		
 		currentPolygon = new ArrayList<Point>();
+
 	}
 
 	@Override
@@ -200,5 +211,5 @@ public class ImagePanel extends JPanel implements MouseListener {
 	public static ArrayList<ArrayList<Point>> getPolygonsList() {
 		return polygonsList;
 	}
-	
+		
 }
