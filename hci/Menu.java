@@ -78,7 +78,7 @@ public class Menu extends JFrame{
 						"HCI_2012", 1);
 				if (name != null){
 					//create polygon with name
-					ImageLabeller.addNewPolygon();
+					ImageLabeller.addNewPolygon(name);
 				}
 			}
 		});

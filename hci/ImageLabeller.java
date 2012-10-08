@@ -54,8 +54,8 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
             
 
 	
-	public static void addNewPolygon() {
-		imagePanel.addNewPolygon();
+	public static void addNewPolygon(String name) {
+		imagePanel.addNewPolygon(name);
 	}
 	
 	@Override

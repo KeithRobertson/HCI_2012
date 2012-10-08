@@ -150,16 +150,15 @@ public class ImagePanel extends JPanel implements MouseListener {
 	/**
 	 * moves current polygon to the list of polygons and makes pace for a new one
 	 */
-	
-
 		
 		
-	public void addNewPolygon() {
+		
+	public void addNewPolygon(String name) {
 		//finish the current polygon if any
 		if (currentPolygon != null ) {
-	   finishPolygon(currentPolygon);
+			finishPolygon(currentPolygon);
 			polygonsList.add(currentPolygon);
-			ImageLabeller.listModel.addElement(currentPolygon);
+			ImageLabeller.listModel.addElement(name);		
 		}
 		currentPolygon = new ArrayList<Point>();
 
