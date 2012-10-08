@@ -13,8 +13,6 @@ import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Hashtable;
 
 import hci.utils.*;
 
@@ -47,7 +45,6 @@ public class ImagePanel extends JPanel implements MouseListener {
 	/**
 	 * human readable list of polygons
 	 */
-	static Dictionary<String, ArrayList<Point>> humanPolygonsList = new Hashtable<String, ArrayList<Point>>();
 	
 	/**
 	 * default constructor, sets up the window properties

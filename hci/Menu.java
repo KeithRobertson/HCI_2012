@@ -114,6 +114,21 @@ public class Menu extends JFrame{
 		deleteButton.setSize(80,20);
 		deleteButton.setEnabled(true);
 		deleteButton.setToolTipText("Click to delete the selected polygon");
+		deleteButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String name = JOptionPane.showInputDialog(null, "Enter the name of the polygon to delete: ",
+						"HCI_2012", 1);
+				if (name != null){
+					//create polygon with name
+					for (int i = 0; i < ImageLabeller.listModel.getSize(); i++){
+						if (name.equals(ImageLabeller.listModel.getElementAt(i)));
+							ImageLabeller.listModel.removeElementAt(i);
+							break;
+					}
+				}
+			}
+		});
 		
 	    renameButton = new JButton("Rename");
 		renameButton.setMnemonic(KeyEvent.VK_N);

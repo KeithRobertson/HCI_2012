@@ -27,6 +27,7 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 	private static final long serialVersionUID = 1L;
 	final static JFileChooser fc = new JFileChooser();
 	
+	
 	/**
 	 * main window panel
 	 */
@@ -70,7 +71,6 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 	 * @throws Exception
 	 */
 	public void setupGUI(String imageFilename) throws Exception {
-		
 		this.addWindowListener(new WindowAdapter() {
 		  	public void windowClosing(WindowEvent event) {
 		  		quit();
@@ -81,7 +81,7 @@ public class ImageLabeller extends JFrame implements ListSelectionListener{
 		appPanel = new JPanel();
 		this.setLayout(new BoxLayout(appPanel, BoxLayout.X_AXIS));
 		this.setContentPane(appPanel);
-		
+
         //Create and set up the image panel.
 		imagePanel = new ImagePanel(imageFilename);
 		imagePanel.setOpaque(true); //content panes must be opaque
