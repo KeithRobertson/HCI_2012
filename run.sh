@@ -1,4 +1,5 @@
 #!/bin/bash
 
-javac */*.java
-java hci.ImageLabeller ./images/U1003_0000.jpg
+cd src
+javac *.java
+java Annotator "images/test.jpg"
